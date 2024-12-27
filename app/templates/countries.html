@@ -5,22 +5,44 @@
     <!-- Tally Section -->
     <div class="sticky top-16 z-10 bg-white p-6 shadow-sm">
         <div class="grid grid-cols-2 gap-6 mb-8 p-6 bg-gray-50 rounded-lg">
-        <div class="text-center">
-            <h3 class="text-2xl font-bold text-blue-600">Husband's Visits</h3>
-            <p class="text-4xl font-bold text-blue-600" id="husband-total">
-                {{ countries|selectattr('husband_visited')|list|length }}
-            </p>
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-blue-600">Husband's Visits</h3>
+                <p class="text-4xl font-bold text-blue-600" id="husband-total">
+                    {{ countries|selectattr('husband_visited')|list|length }}
+                </p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-red-600">Wife's Visits</h3>
+                <p class="text-4xl font-bold text-red-600" id="wife-total">
+                    {{ countries|selectattr('wife_visited')|list|length }}
+                </p>
+            </div>
         </div>
-        <div class="text-center">
-            <h3 class="text-2xl font-bold text-red-600">Wife's Visits</h3>
-            <p class="text-4xl font-bold text-red-600" id="wife-total">
-                {{ countries|selectattr('wife_visited')|list|length }}
-            </p>
-        </div>
+        
+        <!-- Filter Controls -->
+        <div class="mb-6 flex space-x-4">
+            <button onclick="filterTable('all')" 
+                    class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">
+                All Countries
+            </button>
+            <button onclick="filterTable('husband')" 
+                    class="bg-blue-100 px-4 py-2 rounded hover:bg-blue-200">
+                Husband Only
+            </button>
+            <button onclick="filterTable('wife')" 
+                    class="bg-red-100 px-4 py-2 rounded hover:bg-red-200">
+                Wife Only
+            </button>
+            <button onclick="filterTable('both')" 
+                    class="bg-purple-100 px-4 py-2 rounded hover:bg-purple-200">
+                Both Visited
+            </button>
+            <button onclick="filterTable('either')" 
+                    class="bg-green-100 px-4 py-2 rounded hover:bg-green-200">
+                Either Visited
+            </button>
         </div>
     </div>
-
-    <h2 class="text-2xl font-bold mb-4">Countries Visited</h2>
 
     <!-- Add this script section -->
     <script>
@@ -48,8 +70,33 @@
                 console.error('Error:', error);
             }
         }
+
+        function filterTable(filterType) {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const husbandChecked = row.querySelector('input[name="husband_visited"]').checked;
+                const wifeChecked = row.querySelector('input[name="wife_visited"]').checked;
+                
+                switch(filterType) {
+                    case 'all':
+                        row.style.display = '';
+                        break;
+                    case 'husband':
+                        row.style.display = husbandChecked ? '' : 'none';
+                        break;
+                    case 'wife':
+                        row.style.display = wifeChecked ? '' : 'none';
+                        break;
+                    case 'both':
+                        row.style.display = (husbandChecked && wifeChecked) ? '' : 'none';
+                        break;
+                    case 'either':
+                        row.style.display = (husbandChecked || wifeChecked) ? '' : 'none';
+                        break;
+                }
+            });
+        }
     </script>
-    
 
     <!-- Countries Table -->
     <div class="overflow-x-auto relative" style="height: calc(100vh - 224px);">
