@@ -324,6 +324,14 @@ def delete_bucket_list_item(id):
     flash('Bucket list item deleted!', 'success')
     return redirect(url_for('main.bucket_list'))
 
+@main_routes.route('/transportation/<int:id>/delete', methods=['POST'])
+def delete_transportation(id):
+    transport = Transportation.query.get_or_404(id)
+    db.session.delete(transport)
+    db.session.commit()
+    flash('Transportation entry deleted!', 'success')
+    return redirect(url_for('main.transportation'))
+
 @main_routes.route('/lodging/<int:id>/delete', methods=['POST'])
 def delete_lodging(id):
     lodging = Lodging.query.get_or_404(id)
