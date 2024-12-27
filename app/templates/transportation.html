@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-white p-6 rounded-lg shadow">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">Transportation Planning</h1>
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white/95 backdrop-blur-sm px-6 pt-6 pb-4 border-b border-gray-100">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Transportation Planning</h1>
         <a href="{{ url_for('main.add_transportation') }}" 
-           class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+           class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
             Add New Transportation
         </a>
     </div>
 
     <!-- Existing Entries Table -->
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white">
+    <div class="overflow-y-auto" style="height: calc(100vh - 250px);">
+        <table class="w-full">
             <thead>
-                <tr class="bg-gray-100">
+                <tr class="sticky top-0 bg-gray-50 border-b border-gray-100">
                     <th class="px-4 py-2 text-left">
                         <a href="?sort=carrier&direction={{ 'desc' if sort_column == 'carrier' and sort_direction == 'asc' else 'asc' }}" 
                            class="flex items-center hover:text-blue-600">
@@ -92,9 +92,9 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-gray-100">
                 {% for entry in transport_entries %}
-                <tr class="border-b hover:bg-gray-50 cursor-pointer" 
+                <tr class="hover:bg-gray-50/50 transition-colors cursor-pointer" 
                     onclick="window.location.href='{{ url_for('main.edit_transportation', id=entry.id) }}'">
                     <td class="px-4 py-2 align-top">{{ entry.carrier }}</td>
                     <td class="px-4 py-2 align-top">{{ entry.method }}</td>
