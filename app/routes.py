@@ -60,6 +60,11 @@ def edit_transportation(id):
             if time_str:
                 return time_type.fromisoformat(time_str)
             return None
+            
+        def parse_time(time_str):
+            if time_str:
+                return time_type.fromisoformat(time_str)
+            return None
 
         # Update transportation entry with converted data
         transport.carrier = request.form.get('carrier')
