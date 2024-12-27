@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import db, Country, Transportation, Lodging
 import csv
 from pathlib import Path
+from datetime import date
 
 def load_countries():
     countries_path = Path(__file__).parent / 'data' / 'countries.csv'
@@ -119,6 +120,47 @@ def add_transportation():
 def lodging():
     lodgings = Lodging.query.order_by(Lodging.arrival_date).all()
     return render_template('lodging.html', lodgings=lodgings)
+
+@main_routes.route('/lodging/add', methods=['GET', 'POST'])
+def add_lodging():
+    if request.method == 'POST':
+        # Convert form data to appropriate types
+        def parse_date(date_str):
+            return date.fromisoformat(date_str) if date_str else None
+            
+        def parse_float(float_str):
+            return float(float_str) if float_str else None
+
+        # Create new lodging entry with converted data
+        new_lodging = Lodging(
+            accommodations=request.form.get('accommodations'),
+            city=request.form.get('city'),
+            country=request.form.get('country'),
+            arrival_date=parse_date(request.form.get('arrival_date')),
+            departure_date=parse_date(request.form.get('departure_date')),
+            nights=int(request.form.get('nights')),
+            cost_per_night=parse_float(request.form.get('cost_per_night')),
+            insurance=parse_float(request.form.get('insurance')),
+            vendor=request.form.get('vendor'),
+            total_cost=parse_float(request.form.get('total_cost')),
+            date_booked=parse_date(request.form.get('date_booked')),
+            contact=request.form.get('contact'),
+            phone_email=request.form.get('phone_email'),
+            address=request.form.get('address'),
+            confirmation_number=request.form.get('confirmation_number'),
+            cancellation_rules=request.form.get('cancellation_rules'),
+            check_in=request.form.get('check_in'),
+            check_out=request.form.get('check_out'),
+            property_link=request.form.get('property_link'),
+            notes=request.form.get('notes')
+        )
+        
+        db.session.add(new_lodging)
+        db.session.commit()
+        flash('Lodging entry added!', 'success')
+        return redirect(url_for('main.lodging'))
+    
+    return render_template('add_lodging.html')
 
 @main_routes.route('/bucket-list')
 def bucket_list():
