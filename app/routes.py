@@ -12,27 +12,40 @@ def transportation():
     transport_entries = Transportation.query.order_by(Transportation.departure_date).all()
     return render_template('transportation.html', transport_entries=transport_entries)
 
+from datetime import date, time
+
 @main_routes.route('/transportation/add', methods=['GET', 'POST'])
 def add_transportation():
     if request.method == 'POST':
-        # Create new transportation entry
+        # Convert form data to appropriate types
+        def parse_date(date_str):
+            return date.fromisoformat(date_str) if date_str else None
+            
+        def parse_time(time_str):
+            return time.fromisoformat(time_str) if time_str else None
+            
+        def parse_float(float_str):
+            return float(float_str) if float_str else None
+
+        # Create new transportation entry with converted data
         new_transport = Transportation(
             carrier=request.form.get('carrier'),
             method=request.form.get('method'),
             number=request.form.get('number'),
-            departure_date=request.form.get('departure_date'),
+            departure_date=parse_date(request.form.get('departure_date')),
             departure_location=request.form.get('departure_location'),
-            departure_time=request.form.get('departure_time'),
+            departure_time=parse_time(request.form.get('departure_time')),
             arrival_location=request.form.get('arrival_location'),
-            arrival_date=request.form.get('arrival_date'),
-            arrival_time=request.form.get('arrival_time'),
+            arrival_date=parse_date(request.form.get('arrival_date')),
+            arrival_time=parse_time(request.form.get('arrival_time')),
             reservation_number=request.form.get('reservation_number'),
-            booked_date=request.form.get('booked_date'),
+            booked_date=parse_date(request.form.get('booked_date')),
             booking_info=request.form.get('booking_info'),
             luggage_restrictions=request.form.get('luggage_restrictions'),
-            purchase_price=request.form.get('purchase_price'),
-            total_cost=request.form.get('total_cost')
+            purchase_price=parse_float(request.form.get('purchase_price')),
+            total_cost=parse_float(request.form.get('total_cost'))
         )
+        
         db.session.add(new_transport)
         db.session.commit()
         flash('Transportation entry added!', 'success')
