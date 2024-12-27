@@ -59,24 +59,29 @@
 
     <!-- Table Container -->
     <div class="relative z-10 pt-32">
+        <!-- Table Head (Fixed) -->
+        <table class="w-full">
+            <thead>
+                <tr class="bg-white sticky top-0 z-20 border-b border-gray-100">
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        #
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Country
+                    </th>
+                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Husband Visited
+                    </th>
+                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Wife Visited
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+        <!-- Table Body (Scrollable) -->
         <div class="overflow-y-auto" style="max-height: calc(100vh - 288px);">
             <table class="w-full">
-                <thead>
-                    <tr class="bg-white sticky -top-24 z-20 border-b border-gray-100">
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            #
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Country
-                        </th>
-                        <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Husband Visited
-                        </th>
-                        <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            Wife Visited
-                        </th>
-                    </tr>
-                </thead>
                 <tbody class="divide-y divide-gray-100">
                     {% for country in countries %}
                     <tr class="hover:bg-gray-50/50 transition-colors">
