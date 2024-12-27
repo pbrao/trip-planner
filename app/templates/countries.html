@@ -35,14 +35,14 @@
                         <input type="checkbox" 
                                onchange="this.form.submit()"
                                name="husband_visited"
-                               {{ 'checked' if country.husband_visited else '' }}
+                               {{ 'checked' if country.husband_visited else ''|trim }}
                                form="update-{{ country.id }}">
                     </td>
                     <td class="px-4 py-2 text-center">
                         <input type="checkbox" 
                                onchange="this.form.submit()"
                                name="wife_visited"
-                               {{ 'checked' if country.wife_visited else '' }}
+                               {{ 'checked' if country.wife_visited else ''|trim }}
                                form="update-{{ country.id }}">
                     </td>
                     <td class="px-4 py-2">
