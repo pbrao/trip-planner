@@ -13,10 +13,10 @@
         <div class="space-y-2">
             <label class="form-label">Method</label>
             <select name="method" class="w-full p-2 border rounded" required>
-                <option value="Flight" {% if transport and transport.method == 'Flight' %}selected{% endif %}>Flight</option>
-                <option value="Train" {% if transport and transport.method == 'Train' %}selected{% endif %}>Train</option>
-                <option value="Bus" {% if transport and transport.method == 'Bus' %}selected{% endif %}>Bus</option>
-                <option value="Car" {% if transport and transport.method == 'Car' %}selected{% endif %}>Car</option>
+                <option value="Flight" {% if transport.method == 'Flight' %}selected{% endif %}>Flight</option>
+                <option value="Train" {% if transport.method == 'Train' %}selected{% endif %}>Train</option>
+                <option value="Bus" {% if transport.method == 'Bus' %}selected{% endif %}>Bus</option>
+                <option value="Car" {% if transport.method == 'Car' %}selected{% endif %}>Car</option>
             </select>
         </div>
         <div class="space-y-2">
