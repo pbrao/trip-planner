@@ -14,7 +14,9 @@
                    class="w-full p-2 border rounded" 
                    required
                    autocomplete="off">
-            <div id="country-suggestions" class="hidden absolute bg-white border border-gray-200 rounded mt-1 w-full max-h-48 overflow-y-auto z-10"></div>
+            <div id="country-suggestions" 
+                 class="hidden absolute bg-white border border-gray-200 rounded mt-1 w-full max-h-48 overflow-y-auto z-10">
+            </div>
         </div>
         <div class="space-y-2">
             <label class="form-label">Cities</label>
@@ -75,6 +77,8 @@
 </div>
 {% endblock %}
 
+</div>
+
 <style>
     #country-suggestions {
         position: absolute;
@@ -91,7 +95,6 @@
     #country-suggestions div {
         padding: 8px;
         cursor: pointer;
-        transition: background-color 0.2s;
     }
     
     #country-suggestions div:hover {
@@ -103,41 +106,35 @@
 document.addEventListener('DOMContentLoaded', function() {
     const countryInput = document.getElementById('country-input');
     const suggestionsDiv = document.getElementById('country-suggestions');
+    let countries = [];
 
-    countryInput.addEventListener('input', async function() {
+    // Fetch countries once when page loads
+    fetch('/api/countries')
+        .then(response => response.json())
+        .then(data => {
+            countries = data;
+        })
+        .catch(error => console.error('Error loading countries:', error));
+
+    countryInput.addEventListener('input', function() {
         const inputValue = this.value.toLowerCase();
-        console.log('Input value:', inputValue); // Debug log
         
         if (inputValue.length >= 2) {
-            try {
-                console.log('Fetching countries...'); // Debug log
-                const response = await fetch('/api/countries');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const countries = await response.json();
-                console.log('Received countries:', countries); // Debug log
-                
-                const filteredCountries = countries.filter(country => 
-                    country.toLowerCase().startsWith(inputValue)
-                );
-                console.log('Filtered countries:', filteredCountries); // Debug log
-                
-                if (filteredCountries.length > 0) {
-                    suggestionsDiv.innerHTML = filteredCountries.map(country => `
+            const filteredCountries = countries.filter(country => 
+                country.toLowerCase().includes(inputValue)
+            );
+            
+            if (filteredCountries.length > 0) {
+                suggestionsDiv.innerHTML = filteredCountries
+                    .slice(0, 10) // Limit to 10 suggestions
+                    .map(country => `
                         <div class="p-2 hover:bg-gray-100 cursor-pointer" 
-                             onclick="selectCountry('${country}')">
+                             onclick="selectCountry('${country.replace("'", "\\'")}')">
                             ${country}
                         </div>
                     `).join('');
-                    suggestionsDiv.classList.remove('hidden');
-                } else {
-                    suggestionsDiv.classList.add('hidden');
-                }
-            } catch (error) {
-                console.error('Error fetching countries:', error);
+                suggestionsDiv.classList.remove('hidden');
+            } else {
                 suggestionsDiv.classList.add('hidden');
             }
         } else {
@@ -145,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Click outside to hide suggestions
+    // Hide suggestions when clicking outside
     document.addEventListener('click', function(e) {
         if (!suggestionsDiv.contains(e.target) && e.target !== countryInput) {
             suggestionsDiv.classList.add('hidden');
@@ -154,8 +151,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function selectCountry(country) {
-    console.log('Selected country:', country); // Debug log
     document.getElementById('country-input').value = country;
     document.getElementById('country-suggestions').classList.add('hidden');
 }
 </script>
+{% endblock %}
