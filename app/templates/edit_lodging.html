@@ -93,16 +93,31 @@
             <textarea name="notes" class="w-full p-2 border rounded">{{ lodging.notes }}</textarea>
         </div>
 
-        <div class="col-span-2 flex justify-end gap-4">
-            <a href="{{ url_for('main.lodging') }}" 
-               class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 text-sm font-medium">
-                Cancel
-            </a>
-            <button type="submit" 
-                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
-                Save Changes
+        <div class="col-span-2 flex justify-between gap-4">
+            <button type="button" 
+                    onclick="confirmDelete()"
+                    class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 text-sm font-medium">
+                Delete Lodging
             </button>
+            <div class="flex gap-4">
+                <a href="{{ url_for('main.lodging') }}" 
+                   class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 text-sm font-medium">
+                    Cancel
+                </a>
+                <button type="submit" 
+                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+                    Save Changes
+                </button>
+            </div>
         </div>
+
+        <script>
+        function confirmDelete() {
+            if (confirm('Are you sure you want to delete this lodging?')) {
+                window.location.href = "{{ url_for('main.delete_lodging', id=lodging.id) }}";
+            }
+        }
+        </script>
     </form>
 </div>
 {% endblock %}
