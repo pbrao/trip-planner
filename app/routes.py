@@ -162,6 +162,13 @@ def update_country(id):
     country.husband_visited = 'husband_visited' in request.form
     country.wife_visited = 'wife_visited' in request.form
     db.session.commit()
-    flash('Country updated successfully!', 'success')
-    return redirect(url_for('main.countries'))
+    
+    # Calculate new totals
+    husband_total = Country.query.filter_by(husband_visited=True).count()
+    wife_total = Country.query.filter_by(wife_visited=True).count()
+    
+    return {
+        'husband_total': husband_total,
+        'wife_total': wife_total
+    }
 
