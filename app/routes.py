@@ -326,10 +326,15 @@ def delete_bucket_list_item(id):
 
 @main_routes.route('/transportation/<int:id>/delete', methods=['POST'])
 def delete_transportation(id):
-    transport = Transportation.query.get_or_404(id)
-    db.session.delete(transport)
-    db.session.commit()
-    flash('Transportation entry deleted!', 'success')
+    try:
+        transport = Transportation.query.get_or_404(id)
+        db.session.delete(transport)
+        db.session.commit()
+        flash('Transportation entry deleted!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting transportation entry: {str(e)}', 'error')
+        print(f"Error deleting transportation: {str(e)}")
     return redirect(url_for('main.transportation'))
 
 @main_routes.route('/lodging/<int:id>/delete', methods=['POST'])
