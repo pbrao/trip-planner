@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import db, Country
+from app.models import db, Country, Transportation
 
 main_routes = Blueprint('main', __name__)
 
