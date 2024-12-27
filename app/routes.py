@@ -375,7 +375,7 @@ def countries():
 
 @main_routes.route('/api/countries')
 def get_countries():
-    countries_path = Path(__file__).parent / 'data' / 'countries.csv'
+    countries_path = Path(__file__).parent.parent / 'data' / 'countries.csv'
     with open(countries_path, newline='', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         countries = [row['name'] for row in reader]
