@@ -79,15 +79,15 @@
             <tbody class="divide-y divide-gray-100">
                     {% for country in countries %}
                     <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
                             {{ loop.index }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
                             <a href="https://en.wikipedia.org/wiki/{{ country.name }}" 
                                target="_blank" 
                                class="text-blue-600 hover:text-blue-800 transition-colors">{{ country.name }}</a>
                         </td>
-                       <td class="px-6 py-4 whitespace-nowrap text-center">
+                       <td class="px-6 py-3 whitespace-nowrap text-center">
                             <input type="checkbox" 
                                    onchange="updateCheckbox(event)"
                                    name="husband_visited"
@@ -96,7 +96,7 @@
                                           hover:border-gray-400 transition-colors"
                                    {% if country.husband_visited %}checked{% endif %}>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <td class="px-6 py-3 whitespace-nowrap text-center">
                            <input type="checkbox" 
                                    onchange="updateCheckbox(event)"
                                    name="wife_visited"
