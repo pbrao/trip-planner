@@ -1,8 +1,108 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-    <h1 class="text-2xl font-bold mb-4">Lodging</h1>
-    <p class="text-gray-600">Your lodging information will appear here.</p>
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 form-container">
+    <div class="bg-white/95 backdrop-blur-sm px-6 pt-6 pb-4 border-b border-gray-100">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Lodging Details</h1>
+        <a href="#" 
+           class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+            Add New Lodging
+        </a>
+    </div>
+
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        <!-- Accommodation Details -->
+        <div class="space-y-2">
+            <label class="form-label">Accommodations</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">City</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Country</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+
+        <!-- Dates Section -->
+        <div class="space-y-2">
+            <label class="form-label">Arrival Date</label>
+            <input type="date" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Departure Date</label>
+            <input type="date" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Number of Nights</label>
+            <input type="number" class="w-full p-2 border rounded">
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="space-y-2">
+            <label class="form-label">Cost per Night</label>
+            <input type="number" step="0.01" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Insurance</label>
+            <input type="number" step="0.01" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Total Cost</label>
+            <input type="number" step="0.01" class="w-full p-2 border rounded">
+        </div>
+
+        <!-- Vendor Details -->
+        <div class="space-y-2">
+            <label class="form-label">Vendor</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Date Booked</label>
+            <input type="date" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Contact</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Phone/Email</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Address</label>
+            <textarea class="w-full p-2 border rounded"></textarea>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Confirmation Number</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Cancellation Rules</label>
+            <textarea class="w-full p-2 border rounded"></textarea>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Check In/Out Times</label>
+            <input type="text" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Property Link</label>
+            <input type="url" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2 col-span-2">
+            <label class="form-label">Notes</label>
+            <textarea class="w-full p-2 border rounded"></textarea>
+        </div>
+
+        <div class="col-span-2 flex justify-end gap-4">
+            <button type="reset" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 text-sm font-medium">
+                Reset
+            </button>
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+                Save Lodging
+            </button>
+        </div>
+    </form>
 </div>
 {% endblock %}
