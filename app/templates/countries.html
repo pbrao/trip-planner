@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-2xl font-bold mb-4">Countries Visited</h2>
+    
+    <!-- Add Country Form -->
+    <form method="POST" action="{{ url_for('add_country') }}" class="mb-6">
+        <div class="flex items-center gap-4">
+            <input type="text" name="name" placeholder="Add new country" 
+                   class="flex-1 p-2 border rounded" required>
+            <button type="submit" 
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Add Country
+            </button>
+        </div>
+    </form>
+
+    <!-- Countries Table -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-4 py-2">Country</th>
+                    <th class="px-4 py-2">Husband Visited</th>
+                    <th class="px-4 py-2">Wife Visited</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for country in countries %}
+                <tr class="border-b">
+                    <td class="px-4 py-2">{{ country.name }}</td>
+                    <td class="px-4 py-2 text-center">
+                        <input type="checkbox" 
+                               onchange="this.form.submit()"
+                               name="husband_visited"
+                               {{ 'checked' if country.husband_visited else '' }}
+                               form="update-{{ country.id }}">
+                    </td>
+                    <td class="px-4 py-2 text-center">
+                        <input type="checkbox" 
+                               onchange="this.form.submit()"
+                               name="wife_visited"
+                               {{ 'checked' if country.wife_visited else '' }}
+                               form="update-{{ country.id }}">
+                    </td>
+                    <td class="px-4 py-2">
+                        <form method="POST" 
+                              action="{{ url_for('delete_country', id=country.id) }}"
+                              class="inline">
+                            <button type="submit" 
+                                    class="text-red-600 hover:text-red-800">
+                                Delete
+                            </button>
+                        </form>
+                        <form method="POST" 
+                              action="{{ url_for('update_country', id=country.id) }}"
+                              id="update-{{ country.id }}"
+                              class="hidden">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
