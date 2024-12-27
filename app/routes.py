@@ -117,7 +117,8 @@ def add_transportation():
 
 @main_routes.route('/lodging')
 def lodging():
-    return render_template('lodging.html')
+    lodgings = Lodging.query.order_by(Lodging.arrival_date).all()
+    return render_template('lodging.html', lodgings=lodgings)
 
 @main_routes.route('/bucket-list')
 def bucket_list():
