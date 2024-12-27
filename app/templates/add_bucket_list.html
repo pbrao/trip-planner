@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             );
             
             if (filteredCountries.length > 0) {
-                suggestionsDiv.innerHTML = filteredCountries
+                suggestionsDiv.innerHTML =  filteredCountries
                     .slice(0, 10) // Limit to 10 suggestions
                     .map(country => `
                         <div class="p-2 hover:bg-gray-100 cursor-pointer" 
@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
+ 
 function selectCountry(country) {
-    document.getElementById('country-input').value = country;
+    document.getElementById('country-input').value = country.replace(/\\'/g, "'");
     document.getElementById('country-suggestions').classList.add('hidden');
 }
 </script>
