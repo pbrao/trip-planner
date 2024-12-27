@@ -24,14 +24,14 @@
                                onchange="this.form.submit()"
                                name="husband_visited"
                                form="update-{{ country.id }}"
-                               {{ 'checked="checked"' if country.husband_visited else '' }}>
+                               {% if country.husband_visited %}checked{% endif %}>
                     </td>
                     <td class="px-4 py-2 text-center">
                         <input type="checkbox" 
                                onchange="this.form.submit()"
                                name="wife_visited"
                                form="update-{{ country.id }}"
-                               {{ 'checked="checked"' if country.wife_visited else '' }}>
+                               {% if country.wife_visited %}checked{% endif %}>
                     </td>
                 </tr>
                 <form method="POST" 
