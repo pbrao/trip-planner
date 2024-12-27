@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retiree Travel Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-xl font-bold">Retiree Travel Planner</a>
+            <div class="flex space-x-4">
+                <a href="/transportation" class="hover:bg-blue-700 px-3 py-2 rounded">Transportation</a>
+                <a href="/lodging" class="hover:bg-blue-700 px-3 py-2 rounded">Lodging</a>
+                <a href="/bucket-list" class="hover:bg-blue-700 px-3 py-2 rounded">Bucket List</a>
+                <a href="/countries" class="hover:bg-blue-700 px-3 py-2 rounded">Countries</a>
+                <div class="bg-white text-blue-600 px-4 py-2 rounded">Login</div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-4 p-4 rounded {{ 'bg-green-100 text-green-800' if category == 'success' else 'bg-red-100 text-red-800' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
