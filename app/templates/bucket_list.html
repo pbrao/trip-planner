@@ -1,8 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-    <h1 class="text-2xl font-bold mb-4">Bucket List</h1>
-    <p class="text-gray-600">Your travel bucket list will appear here.</p>
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden form-container">
+    <div class="bg-white/95 backdrop-blur-sm px-6 pt-6 pb-4 border-b border-gray-100">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Bucket List</h1>
+        <a href="{{ url_for('main.add_bucket_list_item') }}"
+           class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+            Add New Item
+        </a>
+    </div>
+
+    <div class="overflow-y-auto" style="max-height: calc(100vh - 250px);">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="sticky top-0 bg-gray-50 border-b border-gray-100">
+                    <th class="px-4 py-2 text-left">Country</th>
+                    <th class="px-4 py-2 text-left">Cities</th>
+                    <th class="px-4 py-2 text-left">Region</th>
+                    <th class="px-4 py-2 text-left">Priority</th>
+                    <th class="px-4 py-2 text-left">Cost Level</th>
+                    <th class="px-4 py-2 text-left">Months</th>
+                    <th class="px-4 py-2 text-left">Notes</th>
+                    <th class="px-4 py-2 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for item in items %}
+                <tr class="hover:bg-gray-50/50 transition-colors">
+                    <td class="px-4 py-2 align-top">{{ item.country }}</td>
+                    <td class="px-4 py-2 align-top">{{ item.cities }}</td>
+                    <td class="px-4 py-2 align-top">{{ item.region }}</td>
+                    <td class="px-4 py-2 align-top">{{ item.priority }}</td>
+                    <td class="px-4 py-2 align-top">{{ item.cost_level }}</td>
+                    <td class="px-4 py-2 align-top">
+                        {% for month in ['january', 'february', 'march', 'april', 'may', 'june', 
+                                        'july', 'august', 'september', 'october', 'november', 'december'] %}
+                            {% if getattr(item, month) %}
+                                <span class="text-xs bg-gray-100 px-1 py-0.5 rounded">{{ month[:3] }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2 align-top">{{ item.notes }}</td>
+                    <td class="px-4 py-2 text-right align-top">
+                        <form method="POST" action="{{ url_for('main.delete_bucket_list_item', id=item.id) }}" 
+                              onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="px-4 py-2 text-center text-gray-500">
+                        No bucket list items found
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

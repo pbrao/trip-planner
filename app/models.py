@@ -49,12 +49,12 @@ class Lodging(db.Model):
 
 class BucketList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    country = db.Column(db.String(100))
+    country = db.Column(db.String(100), nullable=False)
     cities = db.Column(db.Text)
     region = db.Column(db.String(100))
-    priority = db.Column(db.Integer)
+    priority = db.Column(db.Integer, default=1)
     potential_dates = db.Column(db.Text)
-    cost_level = db.Column(db.String(50))
+    cost_level = db.Column(db.String(50))  # Low, Medium, High
     january = db.Column(db.Boolean, default=False)
     february = db.Column(db.Boolean, default=False)
     march = db.Column(db.Boolean, default=False)

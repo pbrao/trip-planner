@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 form-container">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Add Bucket List Item</h1>
+    
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Basic Info -->
+        <div class="space-y-2">
+            <label class="form-label">Country</label>
+            <input type="text" name="country" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Cities</label>
+            <input type="text" name="cities" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Region</label>
+            <input type="text" name="region" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Priority</label>
+            <input type="number" name="priority" class="w-full p-2 border rounded" value="1" min="1">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Potential Dates</label>
+            <input type="text" name="potential_dates" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Cost Level</label>
+            <select name="cost_level" class="w-full p-2 border rounded">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+
+        <!-- Months -->
+        <div class="col-span-2">
+            <label class="form-label">Best Months</label>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                {% for month in ['January', 'February', 'March', 'April', 'May', 'June', 
+                                'July', 'August', 'September', 'October', 'November', 'December'] %}
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" name="{{ month.lower() }}" class="form-checkbox">
+                    <span>{{ month }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="col-span-2 space-y-2">
+            <label class="form-label">Notes</label>
+            <textarea name="notes" class="w-full p-2 border rounded"></textarea>
+        </div>
+
+        <div class="col-span-2 flex justify-end gap-4">
+            <a href="{{ url_for('main.bucket_list') }}" 
+               class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 text-sm font-medium">
+                Cancel
+            </a>
+            <button type="submit" 
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+                Add Item
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

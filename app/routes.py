@@ -185,7 +185,47 @@ def add_lodging():
 
 @main_routes.route('/bucket-list')
 def bucket_list():
-    return render_template('bucket_list.html')
+    items = BucketList.query.order_by(BucketList.priority).all()
+    return render_template('bucket_list.html', items=items)
+
+@main_routes.route('/bucket-list/add', methods=['GET', 'POST'])
+def add_bucket_list_item():
+    if request.method == 'POST':
+        new_item = BucketList(
+            country=request.form.get('country'),
+            cities=request.form.get('cities'),
+            region=request.form.get('region'),
+            priority=int(request.form.get('priority', 1)),
+            potential_dates=request.form.get('potential_dates'),
+            cost_level=request.form.get('cost_level'),
+            january='january' in request.form,
+            february='february' in request.form,
+            march='march' in request.form,
+            april='april' in request.form,
+            may='may' in request.form,
+            june='june' in request.form,
+            july='july' in request.form,
+            august='august' in request.form,
+            september='september' in request.form,
+            october='october' in request.form,
+            november='november' in request.form,
+            december='december' in request.form,
+            notes=request.form.get('notes')
+        )
+        db.session.add(new_item)
+        db.session.commit()
+        flash('Bucket list item added!', 'success')
+        return redirect(url_for('main.bucket_list'))
+    
+    return render_template('add_bucket_list.html')
+
+@main_routes.route('/bucket-list/<int:id>/delete', methods=['POST'])
+def delete_bucket_list_item(id):
+    item = BucketList.query.get_or_404(id)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Bucket list item deleted!', 'success')
+    return redirect(url_for('main.bucket_list'))
 
 @main_routes.route('/countries')
 def countries():
