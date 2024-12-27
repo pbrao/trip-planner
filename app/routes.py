@@ -165,10 +165,3 @@ def update_country(id):
     flash('Country updated successfully!', 'success')
     return redirect(url_for('main.countries'))
 
-@main_routes.route('/country/<int:id>/delete', methods=['POST'])
-def delete_country(id):
-    country = Country.query.get_or_404(id)
-    db.session.delete(country)
-    db.session.commit()
-    flash('Country deleted successfully!', 'success')
-    return redirect(url_for('main.countries'))

@@ -13,7 +13,6 @@
                     <th class="px-4 py-2">Country</th>
                     <th class="px-4 py-2">Husband Visited</th>
                     <th class="px-4 py-2">Wife Visited</th>
-                    <th class="px-4 py-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,24 +33,12 @@
                                {{ 'checked' if country.wife_visited else '' }}
                                form="update-{{ country.id }}">
                     </td>
-                    <td class="px-4 py-2">
-                        {% if country.id %}
-                        <form method="POST" 
-                              action="{{ url_for('main.delete_country', id=country.id) }}"
-                              class="inline">
-                            <button type="submit" 
-                                    class="text-red-600 hover:text-red-800">
-                                Delete
-                            </button>
-                        </form>
-                        {% endif %}
-                        <form method="POST" 
-                              action="{{ url_for('main.update_country', id=country.id) }}"
-                              id="update-{{ country.id }}"
-                              class="hidden">
-                        </form>
-                    </td>
                 </tr>
+                <form method="POST" 
+                      action="{{ url_for('main.update_country', id=country.id) }}"
+                      id="update-{{ country.id }}"
+                      class="hidden">
+                </form>
                 {% endfor %}
             </tbody>
         </table>
