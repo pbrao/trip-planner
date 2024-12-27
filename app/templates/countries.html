@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-    <!-- Tally Section -->
+    <!-- Tally and Filter Section -->
     <div class="sticky top-16 z-30 bg-white/95 backdrop-blur-sm px-8 pt-6 pb-4 border-b border-gray-100">
         <div class="grid grid-cols-2 gap-6 mb-4">
             <div class="text-center p-4 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-100/50">
@@ -54,61 +54,63 @@
         </div>
     </div>
 
-    <!-- Countries Table -->
-    <div class="overflow-x-auto relative" style="height: calc(100vh - 180px);">
-        <table class="w-full">
-            <thead>
-                <tr class="bg-white sticky top-0 z-10 border-b border-gray-100">
-                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        #
-                    </th>
-                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        Country
-                    </th>
-                    <th class="px-4 py-2 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        Husband Visited
-                    </th>
-                    <th class="px-4 py-2 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        Wife Visited
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-                {% for country in countries %}
-                <tr class="hover:bg-gray-50/50 transition-colors">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {{ loop.index }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {{ country.name }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                        <input type="checkbox" 
-                               onchange="updateCheckbox(event)"
-                               name="husband_visited"
-                               form="update-{{ country.id }}"
-                               class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500
-                                      hover:border-gray-400 transition-colors"
-                               {% if country.husband_visited %}checked{% endif %}>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                        <input type="checkbox" 
-                               onchange="updateCheckbox(event)"
-                               name="wife_visited"
-                               form="update-{{ country.id }}"
-                               class="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500
-                                      hover:border-gray-400 transition-colors"
-                               {% if country.wife_visited %}checked{% endif %}>
-                    </td>
-                </tr>
-                <form method="POST" 
-                      action="{{ url_for('main.update_country', id=country.id) }}"
-                      id="update-{{ country.id }}"
-                      class="hidden">
-                </form>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Table Container -->
+    <div class="relative" style="height: calc(100vh - 224px);">
+        <div class="absolute inset-0 overflow-y-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-white sticky top-0 z-20 border-b border-gray-100">
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                            #
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                            Country
+                        </th>
+                        <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                            Husband Visited
+                        </th>
+                        <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                            Wife Visited
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for country in countries %}
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{ loop.index }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                            {{ country.name }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <input type="checkbox" 
+                                   onchange="updateCheckbox(event)"
+                                   name="husband_visited"
+                                   form="update-{{ country.id }}"
+                                   class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500
+                                          hover:border-gray-400 transition-colors"
+                                   {% if country.husband_visited %}checked{% endif %}>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <input type="checkbox" 
+                                   onchange="updateCheckbox(event)"
+                                   name="wife_visited"
+                                   form="update-{{ country.id }}"
+                                   class="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500
+                                          hover:border-gray-400 transition-colors"
+                                   {% if country.wife_visited %}checked{% endif %}>
+                        </td>
+                    </tr>
+                    <form method="POST" 
+                          action="{{ url_for('main.update_country', id=country.id) }}"
+                          id="update-{{ country.id }}"
+                          class="hidden">
+                    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
