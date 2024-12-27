@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import db, Country, Transportation, Lodging
+from app.models import db, Country, Transportation, Lodging, BucketList
 import csv
 from pathlib import Path
 from datetime import date, time, time as time_type
