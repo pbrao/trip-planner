@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 form-container">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Bucket List Item</h1>
+    
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label class="form-label">Country</label>
+            <input type="text" name="country" value="{{ item.country }}" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Cities</label>
+            <input type="text" name="cities" value="{{ item.cities }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Region</label>
+            <input type="text" name="region" value="{{ item.region }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Priority</label>
+            <select name="priority" class="w-full p-2 border rounded" required>
+                {% for i in range(1, 6) %}
+                    <option value="{{ i }}" {% if item.priority == i %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Potential Dates</label>
+            <input type="text" name="potential_dates" value="{{ item.potential_dates }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Cost Level</label>
+            <select name="cost_level" class="w-full p-2 border rounded" required>
+                <option value="Low" {% if item.cost_level == 'Low' %}selected{% endif %}>Low</option>
+                <option value="Medium" {% if item.cost_level == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="High" {% if item.cost_level == 'High' %}selected{% endif %}>High</option>
+            </select>
+        </div>
+        <div class="space-y-2 col-span-2">
+            <label class="form-label">Available Months</label>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                {% set months = [
+                    ('january', item.january),
+                    ('february', item.february),
+                    ('march', item.march),
+                    ('april', item.april),
+                    ('may', item.may),
+                    ('june', item.june),
+                    ('july', item.july),
+                    ('august', item.august),
+                    ('september', item.september),
+                    ('october', item.october),
+                    ('november', item.november),
+                    ('december', item.december)
+                ] %}
+                {% for month, selected in months %}
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" name="{{ month }}" {% if selected %}checked{% endif %} 
+                               class="w-4 h-4 border rounded">
+                        <span>{{ month[:3] }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="space-y-2 col-span-2">
+            <label class="form-label">Notes</label>
+            <textarea name="notes" class="w-full p-2 border rounded">{{ item.notes }}</textarea>
+        </div>
+        <div class="col-span-2 flex justify-end gap-4">
+            <a href="{{ url_for('main.bucket_list') }}" 
+               class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 text-sm font-medium">
+                Cancel
+            </a>
+            <button type="submit" 
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+                Save Changes
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

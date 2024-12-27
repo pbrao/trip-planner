@@ -251,6 +251,37 @@ def add_bucket_list_item():
     
     return render_template('add_bucket_list.html')
 
+@main_routes.route('/bucket-list/<int:id>/edit', methods=['GET', 'POST'])
+def edit_bucket_list_item(id):
+    item = BucketList.query.get_or_404(id)
+    if request.method == 'POST':
+        # Update bucket list item with form data
+        item.country = request.form.get('country')
+        item.cities = request.form.get('cities')
+        item.region = request.form.get('region')
+        item.priority = int(request.form.get('priority', 1))
+        item.potential_dates = request.form.get('potential_dates')
+        item.cost_level = request.form.get('cost_level')
+        item.january = 'january' in request.form
+        item.february = 'february' in request.form
+        item.march = 'march' in request.form
+        item.april = 'april' in request.form
+        item.may = 'may' in request.form
+        item.june = 'june' in request.form
+        item.july = 'july' in request.form
+        item.august = 'august' in request.form
+        item.september = 'september' in request.form
+        item.october = 'october' in request.form
+        item.november = 'november' in request.form
+        item.december = 'december' in request.form
+        item.notes = request.form.get('notes')
+        
+        db.session.commit()
+        flash('Bucket list item updated!', 'success')
+        return redirect(url_for('main.bucket_list'))
+    
+    return render_template('edit_bucket_list.html', item=item)
+
 @main_routes.route('/bucket-list/<int:id>/delete', methods=['POST'])
 def delete_bucket_list_item(id):
     item = BucketList.query.get_or_404(id)
