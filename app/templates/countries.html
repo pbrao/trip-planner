@@ -3,15 +3,15 @@
 {% block content %}
 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
     <!-- Tally and Filter Section -->
-    <div class="sticky top-16 z-30 bg-white/95 backdrop-blur-sm px-8 pt-6 pb-4 border-b border-gray-100">
-        <div class="grid grid-cols-2 gap-6 mb-4">
-            <div class="text-center p-4 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-100/50">
+    <div class="sticky top-16 z-30 bg-white/95 backdrop-blur-sm px-8 pt-4 pb-2 border-b border-gray-100">
+        <div class="grid grid-cols-2 gap-6 mb-3">
+            <div class="text-center p-3 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-100/50">
                 <h3 class="text-base font-semibold text-blue-800/90 mb-1">Husband's Visits</h3>
                 <p class="text-2xl font-bold text-blue-900" id="husband-total">
                     {{ countries|selectattr('husband_visited')|list|length }}
                 </p>
             </div>
-            <div class="text-center p-4 rounded-lg bg-gradient-to-br from-red-50 to-red-100/50 border border-red-100/50">
+            <div class="text-center p-3 rounded-lg bg-gradient-to-br from-red-50 to-red-100/50 border border-red-100/50">
                 <h3 class="text-base font-semibold text-red-800/90 mb-1">Wife's Visits</h3>
                 <p class="text-2xl font-bold text-red-900" id="wife-total">
                     {{ countries|selectattr('wife_visited')|list|length }}
