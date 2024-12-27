@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 form-container">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Lodging</h1>
+    
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Accommodation Details -->
+        <div class="space-y-2">
+            <label class="form-label">Accommodations</label>
+            <input type="text" name="accommodations" value="{{ lodging.accommodations }}" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">City</label>
+            <input type="text" name="city" value="{{ lodging.city }}" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Country</label>
+            <input type="text" name="country" value="{{ lodging.country }}" class="w-full p-2 border rounded" required>
+        </div>
+
+        <!-- Dates Section -->
+        <div class="space-y-2">
+            <label class="form-label">Arrival Date</label>
+            <input type="date" name="arrival_date" value="{{ lodging.arrival_date }}" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Departure Date</label>
+            <input type="date" name="departure_date" value="{{ lodging.departure_date }}" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Number of Nights</label>
+            <input type="number" name="nights" value="{{ lodging.nights }}" class="w-full p-2 border rounded" required>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="space-y-2">
+            <label class="form-label">Cost per Night</label>
+            <input type="number" step="0.01" name="cost_per_night" value="{{ lodging.cost_per_night }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Insurance</label>
+            <input type="number" step="0.01" name="insurance" value="{{ lodging.insurance }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Total Cost</label>
+            <input type="number" step="0.01" name="total_cost" value="{{ lodging.total_cost }}" class="w-full p-2 border rounded">
+        </div>
+
+        <!-- Vendor Details -->
+        <div class="space-y-2">
+            <label class="form-label">Vendor</label>
+            <input type="text" name="vendor" value="{{ lodging.vendor }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Date Booked</label>
+            <input type="date" name="date_booked" value="{{ lodging.date_booked }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Contact</label>
+            <input type="text" name="contact" value="{{ lodging.contact }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Phone/Email</label>
+            <input type="text" name="phone_email" value="{{ lodging.phone_email }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Address</label>
+            <textarea name="address" class="w-full p-2 border rounded">{{ lodging.address }}</textarea>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Confirmation Number</label>
+            <input type="text" name="confirmation_number" value="{{ lodging.confirmation_number }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Cancellation Rules</label>
+            <textarea name="cancellation_rules" class="w-full p-2 border rounded">{{ lodging.cancellation_rules }}</textarea>
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Check In Time</label>
+            <input type="time" name="check_in" value="{{ lodging.check_in }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Check Out Time</label>
+            <input type="time" name="check_out" value="{{ lodging.check_out }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="form-label">Property Link</label>
+            <input type="url" name="property_link" value="{{ lodging.property_link }}" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2 col-span-2">
+            <label class="form-label">Notes</label>
+            <textarea name="notes" class="w-full p-2 border rounded">{{ lodging.notes }}</textarea>
+        </div>
+
+        <div class="col-span-2 flex justify-end gap-4">
+            <a href="{{ url_for('main.lodging') }}" 
+               class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 text-sm font-medium">
+                Cancel
+            </a>
+            <button type="submit" 
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
+                Save Changes
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

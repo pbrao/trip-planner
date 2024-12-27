@@ -149,6 +149,38 @@ def lodging():
     lodgings = Lodging.query.order_by(Lodging.arrival_date).all()
     return render_template('lodging.html', lodgings=lodgings)
 
+@main_routes.route('/lodging/<int:id>/edit', methods=['GET', 'POST'])
+def edit_lodging(id):
+    lodging = Lodging.query.get_or_404(id)
+    if request.method == 'POST':
+        # Update lodging entry with converted data
+        lodging.accommodations = request.form.get('accommodations')
+        lodging.city = request.form.get('city')
+        lodging.country = request.form.get('country')
+        lodging.arrival_date = parse_date(request.form.get('arrival_date'))
+        lodging.departure_date = parse_date(request.form.get('departure_date'))
+        lodging.nights = int(request.form.get('nights'))
+        lodging.cost_per_night = parse_float(request.form.get('cost_per_night'))
+        lodging.insurance = parse_float(request.form.get('insurance'))
+        lodging.vendor = request.form.get('vendor')
+        lodging.total_cost = parse_float(request.form.get('total_cost'))
+        lodging.date_booked = parse_date(request.form.get('date_booked'))
+        lodging.contact = request.form.get('contact')
+        lodging.phone_email = request.form.get('phone_email')
+        lodging.address = request.form.get('address')
+        lodging.confirmation_number = request.form.get('confirmation_number')
+        lodging.cancellation_rules = request.form.get('cancellation_rules')
+        lodging.check_in = parse_time(request.form.get('check_in'))
+        lodging.check_out = parse_time(request.form.get('check_out'))
+        lodging.property_link = request.form.get('property_link')
+        lodging.notes = request.form.get('notes')
+        
+        db.session.commit()
+        flash('Lodging entry updated!', 'success')
+        return redirect(url_for('main.lodging'))
+    
+    return render_template('edit_lodging.html', lodging=lodging)
+
 @main_routes.route('/lodging/add', methods=['GET', 'POST'])
 def add_lodging():
     if request.method == 'POST':
