@@ -5,7 +5,7 @@
     <h2 class="text-2xl font-bold mb-4">Countries Visited</h2>
     
     <!-- Add Country Form -->
-    <form method="POST" action="{{ url_for('add_country') }}" class="mb-6">
+    <form method="POST" action="{{ url_for('main.add_country') }}" class="mb-6">
         <div class="flex items-center gap-4">
             <input type="text" name="name" placeholder="Add new country" 
                    class="flex-1 p-2 border rounded" required>
@@ -47,7 +47,7 @@
                     </td>
                     <td class="px-4 py-2">
                         <form method="POST" 
-                              action="{{ url_for('delete_country', id=country.id) }}"
+                              action="{{ url_for('main.delete_country', id=country.id) }}"
                               class="inline">
                             <button type="submit" 
                                     class="text-red-600 hover:text-red-800">
@@ -55,7 +55,7 @@
                             </button>
                         </form>
                         <form method="POST" 
-                              action="{{ url_for('update_country', id=country.id) }}"
+                              action="{{ url_for('main.update_country', id=country.id) }}"
                               id="update-{{ country.id }}"
                               class="hidden">
                         </form>
