@@ -2,12 +2,16 @@
 
 {% block content %}
 <div class="bg-white p-6 rounded-lg shadow">
-    <h1 class="text-3xl font-bold mb-6">Transportation Planning</h1>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">Transportation Planning</h1>
+        <a href="{{ url_for('main.add_transportation') }}" 
+           class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+            Add New Transportation
+        </a>
+    </div>
 
     <!-- Existing Entries Table -->
-    <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">Existing Transportation Entries</h2>
-        <div class="overflow-x-auto">
+    <div class="overflow-x-auto">
             <table class="min-w-full bg-white">
                 <thead>
                     <tr class="bg-gray-100">

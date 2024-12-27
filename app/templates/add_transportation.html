@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Add New Transportation</h1>
+    
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label class="block font-medium">Carrier</label>
+            <input type="text" name="carrier" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Method</label>
+            <select name="method" class="w-full p-2 border rounded" required>
+                <option value="Flight">Flight</option>
+                <option value="Train">Train</option>
+                <option value="Bus">Bus</option>
+                <option value="Car">Car</option>
+            </select>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Number</label>
+            <input type="text" name="number" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Departure Date</label>
+            <input type="date" name="departure_date" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Departure Location</label>
+            <input type="text" name="departure_location" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Departure Time</label>
+            <input type="time" name="departure_time" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Arrival Location</label>
+            <input type="text" name="arrival_location" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Arrival Date</label>
+            <input type="date" name="arrival_date" class="w-full p-2 border rounded" required>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Arrival Time</label>
+            <input type="time" name="arrival_time" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Reservation Number</label>
+            <input type="text" name="reservation_number" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Booked Date</label>
+            <input type="date" name="booked_date" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Booking Info</label>
+            <textarea name="booking_info" class="w-full p-2 border rounded"></textarea>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Luggage Restrictions</label>
+            <textarea name="luggage_restrictions" class="w-full p-2 border rounded"></textarea>
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Purchase Price</label>
+            <input type="number" step="0.01" name="purchase_price" class="w-full p-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label class="block font-medium">Total Cost</label>
+            <input type="number" step="0.01" name="total_cost" class="w-full p-2 border rounded">
+        </div>
+        <div class="col-span-2 flex justify-end gap-4">
+            <a href="{{ url_for('main.transportation') }}" 
+               class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600">
+                Cancel
+            </a>
+            <button type="submit" 
+                    class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                Add Transportation
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

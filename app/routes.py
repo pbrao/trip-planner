@@ -7,8 +7,13 @@ main_routes = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main_routes.route('/transportation', methods=['GET', 'POST'])
+@main_routes.route('/transportation')
 def transportation():
+    transport_entries = Transportation.query.order_by(Transportation.departure_date).all()
+    return render_template('transportation.html', transport_entries=transport_entries)
+
+@main_routes.route('/transportation/add', methods=['GET', 'POST'])
+def add_transportation():
     if request.method == 'POST':
         # Create new transportation entry
         new_transport = Transportation(
@@ -33,9 +38,7 @@ def transportation():
         flash('Transportation entry added!', 'success')
         return redirect(url_for('main.transportation'))
     
-    # Get all transportation entries
-    transport_entries = Transportation.query.order_by(Transportation.departure_date).all()
-    return render_template('transportation.html', transport_entries=transport_entries)
+    return render_template('add_transportation.html')
 
 @main_routes.route('/lodging')
 def lodging():
