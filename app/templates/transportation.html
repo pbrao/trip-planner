@@ -15,27 +15,31 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="px-4 py-2">Carrier</th>
-                    <th class="px-4 py-2">Method</th>
-                    <th class="px-4 py-2">Departure</th>
-                    <th class="px-4 py-2">Arrival</th>
-                    <th class="px-4 py-2">Cost</th>
+                    <th class="px-4 py-2 text-left">Carrier</th>
+                    <th class="px-4 py-2 text-left">Method</th>
+                    <th class="px-4 py-2 text-left">Departure</th>
+                    <th class="px-4 py-2 text-left">Arrival</th>
+                    <th class="px-4 py-2 text-right">Cost</th>
                 </tr>
             </thead>
             <tbody>
                 {% for entry in transport_entries %}
-                <tr class="border-b">
-                    <td class="px-4 py-2">{{ entry.carrier }}</td>
-                    <td class="px-4 py-2">{{ entry.method }}</td>
-                    <td class="px-4 py-2">
-                        {{ entry.departure_location }}<br>
-                        {{ entry.departure_date }} {{ entry.departure_time }}
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-2 align-top">{{ entry.carrier }}</td>
+                    <td class="px-4 py-2 align-top">{{ entry.method }}</td>
+                    <td class="px-4 py-2 align-top">
+                        <div class="font-medium">{{ entry.departure_location }}</div>
+                        <div class="text-sm text-gray-600">
+                            {{ entry.departure_date }} {{ entry.departure_time }}
+                        </div>
                     </td>
-                    <td class="px-4 py-2">
-                        {{ entry.arrival_location }}<br>
-                        {{ entry.arrival_date }} {{ entry.arrival_time }}
+                    <td class="px-4 py-2 align-top">
+                        <div class="font-medium">{{ entry.arrival_location }}</div>
+                        <div class="text-sm text-gray-600">
+                            {{ entry.arrival_date }} {{ entry.arrival_time }}
+                        </div>
                     </td>
-                    <td class="px-4 py-2">${{ entry.total_cost }}</td>
+                    <td class="px-4 py-2 text-right align-top">${{ "%.2f"|format(entry.total_cost) }}</td>
                 </tr>
                 {% else %}
                 <tr>
