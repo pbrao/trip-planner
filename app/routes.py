@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from app.models import db, Country, Transportation, Lodging, BucketList
 import csv
 from pathlib import Path
@@ -372,6 +372,14 @@ def countries():
     
     db.session.commit()
     return render_template('countries.html', countries=countries)
+
+@main_routes.route('/api/countries')
+def get_countries():
+    countries_path = Path(__file__).parent / 'data' / 'countries.csv'
+    with open(countries_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        countries = [row['name'] for row in reader]
+    return jsonify(countries)
 
 @main_routes.route('/country/add', methods=['POST'])
 def add_country():

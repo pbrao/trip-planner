@@ -6,9 +6,15 @@
     
     <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Basic Info -->
-        <div class="space-y-2">
+        <div class="space-y-2 relative">
             <label class="form-label">Country</label>
-            <input type="text" name="country" class="w-full p-2 border rounded" required>
+            <input type="text" 
+                   name="country" 
+                   id="country-input"
+                   class="w-full p-2 border rounded" 
+                   required
+                   autocomplete="off">
+            <div id="country-suggestions" class="hidden absolute bg-white border border-gray-200 rounded mt-1 w-full max-h-48 overflow-y-auto z-10"></div>
         </div>
         <div class="space-y-2">
             <label class="form-label">Cities</label>
@@ -68,3 +74,53 @@
     </form>
 </div>
 {% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const countryInput = document.getElementById('country-input');
+    const suggestionsDiv = document.getElementById('country-suggestions');
+    let countries = [];
+
+    // Fetch countries from the server
+    fetch('/api/countries')
+        .then(response => response.json())
+        .then(data => {
+            countries = data;
+        });
+
+    countryInput.addEventListener('input', function() {
+        const inputValue = this.value.toLowerCase();
+        if (inputValue.length >= 2) {
+            const filteredCountries = countries.filter(country => 
+                country.toLowerCase().startsWith(inputValue)
+            );
+            
+            if (filteredCountries.length > 0) {
+                suggestionsDiv.innerHTML = filteredCountries.map(country => `
+                    <div class="p-2 hover:bg-gray-100 cursor-pointer" 
+                         onclick="selectCountry('${country}')">
+                        ${country}
+                    </div>
+                `).join('');
+                suggestionsDiv.classList.remove('hidden');
+            } else {
+                suggestionsDiv.classList.add('hidden');
+            }
+        } else {
+            suggestionsDiv.classList.add('hidden');
+        }
+    });
+
+    // Click outside to hide suggestions
+    document.addEventListener('click', function(e) {
+        if (!suggestionsDiv.contains(e.target) && e.target !== countryInput) {
+            suggestionsDiv.classList.add('hidden');
+        }
+    });
+});
+
+function selectCountry(country) {
+    document.getElementById('country-input').value = country;
+    document.getElementById('country-suggestions').classList.add('hidden');
+}
+</script>
