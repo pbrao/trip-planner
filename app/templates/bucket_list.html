@@ -33,9 +33,22 @@
                     <td class="px-4 py-2 align-top">{{ item.priority }}</td>
                     <td class="px-4 py-2 align-top">{{ item.cost_level }}</td>
                     <td class="px-4 py-2 align-top">
-                        {% for month in ['january', 'february', 'march', 'april', 'may', 'june', 
-                                        'july', 'august', 'september', 'october', 'november', 'december'] %}
-                            {% if getattr(item, month) %}
+                        {% set months = [
+                            ('january', item.january),
+                            ('february', item.february),
+                            ('march', item.march),
+                            ('april', item.april),
+                            ('may', item.may),
+                            ('june', item.june),
+                            ('july', item.july),
+                            ('august', item.august),
+                            ('september', item.september),
+                            ('october', item.october),
+                            ('november', item.november),
+                            ('december', item.december)
+                        ] %}
+                        {% for month, selected in months %}
+                            {% if selected %}
                                 <span class="text-xs bg-gray-100 px-1 py-0.5 rounded">{{ month[:3] }}</span>
                             {% endif %}
                         {% endfor %}
