@@ -1,5 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import db, Country, Transportation
+import csv
+from pathlib import Path
+
+def load_countries():
+    countries_path = Path(__file__).parent / 'data' / 'countries.csv'
+    with open(countries_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        return [row['name'] for row in reader]
 
 main_routes = Blueprint('main', __name__)
 
@@ -117,7 +125,22 @@ def bucket_list():
 
 @main_routes.route('/countries')
 def countries():
-    countries = Country.query.all()
+    # Get all countries from CSV
+    all_countries = load_countries()
+    
+    # Get existing country records from database
+    existing_countries = {c.name: c for c in Country.query.all()}
+    
+    # Create list of Country objects for all countries
+    countries = []
+    for country_name in all_countries:
+        if country_name in existing_countries:
+            # Use existing record
+            countries.append(existing_countries[country_name])
+        else:
+            # Create new Country object
+            countries.append(Country(name=country_name))
+    
     return render_template('countries.html', countries=countries)
 
 @main_routes.route('/country/add', methods=['POST'])

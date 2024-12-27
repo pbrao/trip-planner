@@ -4,17 +4,6 @@
 <div class="bg-white p-6 rounded-lg shadow">
     <h2 class="text-2xl font-bold mb-4">Countries Visited</h2>
     
-    <!-- Add Country Form -->
-    <form method="POST" action="{{ url_for('main.add_country') }}" class="mb-6">
-        <div class="flex items-center gap-4">
-            <input type="text" name="name" placeholder="Add new country" 
-                   class="flex-1 p-2 border rounded" required>
-            <button type="submit" 
-                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Add Country
-            </button>
-        </div>
-    </form>
 
     <!-- Countries Table -->
     <div class="overflow-x-auto">
