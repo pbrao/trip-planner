@@ -10,6 +10,9 @@ def create_app():
     
     db.init_app(app)
     
+    # Import models after db initialization
+    from app import models
+    
     from app.routes import main_routes
     app.register_blueprint(main_routes)
     
