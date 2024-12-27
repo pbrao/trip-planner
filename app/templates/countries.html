@@ -35,6 +35,7 @@
                                form="update-{{ country.id }}">
                     </td>
                     <td class="px-4 py-2">
+                        {% if country.id %}
                         <form method="POST" 
                               action="{{ url_for('main.delete_country', id=country.id) }}"
                               class="inline">
@@ -43,6 +44,7 @@
                                 Delete
                             </button>
                         </form>
+                        {% endif %}
                         <form method="POST" 
                               action="{{ url_for('main.update_country', id=country.id) }}"
                               id="update-{{ country.id }}"

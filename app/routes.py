@@ -138,9 +138,12 @@ def countries():
             # Use existing record
             countries.append(existing_countries[country_name])
         else:
-            # Create new Country object
-            countries.append(Country(name=country_name))
+            # Create new Country object and save to database
+            new_country = Country(name=country_name)
+            db.session.add(new_country)
+            countries.append(new_country)
     
+    db.session.commit()
     return render_template('countries.html', countries=countries)
 
 @main_routes.route('/country/add', methods=['POST'])
