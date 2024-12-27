@@ -15,11 +15,81 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="sticky top-0 bg-gray-50 border-b border-gray-100">
-                    <th class="px-4 py-2 text-left">Accommodations</th>
-                    <th class="px-4 py-2 text-left">Location</th>
-                    <th class="px-4 py-2 text-left">Dates</th>
-                    <th class="px-4 py-2 text-left">Nights</th>
-                    <th class="px-4 py-2 text-right">Total Cost</th>
+                    <th class="px-4 py-2 text-left">
+                        <a href="?sort=accommodations&direction={{ 'desc' if sort_column == 'accommodations' and sort_direction == 'asc' else 'asc' }}" 
+                           class="flex items-center hover:text-blue-600">
+                            Accommodations
+                            {% if sort_column == 'accommodations' %}
+                                <span class="ml-1">
+                                    {% if sort_direction == 'asc' %}
+                                        ▲
+                                    {% else %}
+                                        ▼
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="px-4 py-2 text-left">
+                        <a href="?sort=city&direction={{ 'desc' if sort_column == 'city' and sort_direction == 'asc' else 'asc' }}" 
+                           class="flex items-center hover:text-blue-600">
+                            Location
+                            {% if sort_column == 'city' %}
+                                <span class="ml-1">
+                                    {% if sort_direction == 'asc' %}
+                                        ▲
+                                    {% else %}
+                                        ▼
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="px-4 py-2 text-left">
+                        <a href="?sort=arrival_date&direction={{ 'desc' if sort_column == 'arrival_date' and sort_direction == 'asc' else 'asc' }}" 
+                           class="flex items-center hover:text-blue-600">
+                            Dates
+                            {% if sort_column == 'arrival_date' %}
+                                <span class="ml-1">
+                                    {% if sort_direction == 'asc' %}
+                                        ▲
+                                    {% else %}
+                                        ▼
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="px-4 py-2 text-left">
+                        <a href="?sort=nights&direction={{ 'desc' if sort_column == 'nights' and sort_direction == 'asc' else 'asc' }}" 
+                           class="flex items-center hover:text-blue-600">
+                            Nights
+                            {% if sort_column == 'nights' %}
+                                <span class="ml-1">
+                                    {% if sort_direction == 'asc' %}
+                                        ▲
+                                    {% else %}
+                                        ▼
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="px-4 py-2 text-right">
+                        <a href="?sort=total_cost&direction={{ 'desc' if sort_column == 'total_cost' and sort_direction == 'asc' else 'asc' }}" 
+                           class="flex items-center justify-end hover:text-blue-600">
+                            Total Cost
+                            {% if sort_column == 'total_cost' %}
+                                <span class="ml-1">
+                                    {% if sort_direction == 'asc' %}
+                                        ▲
+                                    {% else %}
+                                        ▼
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">

@@ -146,8 +146,25 @@ def add_transportation():
 
 @main_routes.route('/lodging')
 def lodging():
-    lodgings = Lodging.query.order_by(Lodging.arrival_date).all()
-    return render_template('lodging.html', lodgings=lodgings)
+    sort_column = request.args.get('sort', 'arrival_date')
+    sort_direction = request.args.get('direction', 'asc')
+    
+    # Validate sort column
+    valid_columns = ['accommodations', 'city', 'country', 'arrival_date', 'departure_date', 'nights', 'total_cost']
+    if sort_column not in valid_columns:
+        sort_column = 'arrival_date'
+    
+    # Create the order_by clause
+    column = getattr(Lodging, sort_column)
+    if sort_direction == 'desc':
+        column = column.desc()
+    
+    lodgings = Lodging.query.order_by(column).all()
+    
+    return render_template('lodging.html', 
+                         lodgings=lodgings,
+                         sort_column=sort_column,
+                         sort_direction=sort_direction)
 
 @main_routes.route('/lodging/<int:id>/edit', methods=['GET', 'POST'])
 def edit_lodging(id):
@@ -217,8 +234,25 @@ def add_lodging():
 
 @main_routes.route('/bucket-list')
 def bucket_list():
-    items = BucketList.query.order_by(BucketList.priority).all()
-    return render_template('bucket_list.html', items=items)
+    sort_column = request.args.get('sort', 'priority')
+    sort_direction = request.args.get('direction', 'asc')
+    
+    # Validate sort column
+    valid_columns = ['country', 'cities', 'region', 'priority', 'cost_level']
+    if sort_column not in valid_columns:
+        sort_column = 'priority'
+    
+    # Create the order_by clause
+    column = getattr(BucketList, sort_column)
+    if sort_direction == 'desc':
+        column = column.desc()
+    
+    items = BucketList.query.order_by(column).all()
+    
+    return render_template('bucket_list.html', 
+                         items=items,
+                         sort_column=sort_column,
+                         sort_direction=sort_direction)
 
 @main_routes.route('/bucket-list/add', methods=['GET', 'POST'])
 def add_bucket_list_item():
