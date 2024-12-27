@@ -2,7 +2,18 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import db, Country, Transportation, Lodging
 import csv
 from pathlib import Path
-from datetime import date
+from datetime import date, time, time as time_type
+
+def parse_date(date_str):
+    return date.fromisoformat(date_str) if date_str else None
+
+def parse_time(time_str):
+    if time_str:
+        return time_type.fromisoformat(time_str)
+    return None
+
+def parse_float(float_str):
+    return float(float_str) if float_str else None
 
 def load_countries():
     countries_path = Path(__file__).parent / 'data' / 'countries.csv'
@@ -141,13 +152,6 @@ def lodging():
 @main_routes.route('/lodging/add', methods=['GET', 'POST'])
 def add_lodging():
     if request.method == 'POST':
-        # Convert form data to appropriate types
-        def parse_date(date_str):
-            return date.fromisoformat(date_str) if date_str else None
-            
-        def parse_float(float_str):
-            return float(float_str) if float_str else None
-
         # Create new lodging entry with converted data
         new_lodging = Lodging(
             accommodations=request.form.get('accommodations'),
