@@ -1,131 +1,103 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-white p-6 rounded-lg shadow">
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
     <!-- Tally Section -->
-    <div class="sticky top-16 z-10 bg-white p-6 shadow-sm">
-        <div class="grid grid-cols-2 gap-6 mb-8 p-6 bg-gray-50 rounded-lg">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold text-blue-600">Husband's Visits</h3>
-                <p class="text-4xl font-bold text-blue-600" id="husband-total">
+    <div class="sticky top-16 z-10 bg-white/95 backdrop-blur-sm px-8 pt-8 pb-6 border-b border-gray-100">
+        <div class="grid grid-cols-2 gap-8 mb-6">
+            <div class="text-center p-6 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-100/50">
+                <h3 class="text-lg font-semibold text-blue-800/90 mb-2">Husband's Visits</h3>
+                <p class="text-3xl font-bold text-blue-900" id="husband-total">
                     {{ countries|selectattr('husband_visited')|list|length }}
                 </p>
             </div>
-            <div class="text-center">
-                <h3 class="text-2xl font-bold text-red-600">Wife's Visits</h3>
-                <p class="text-4xl font-bold text-red-600" id="wife-total">
+            <div class="text-center p-6 rounded-lg bg-gradient-to-br from-red-50 to-red-100/50 border border-red-100/50">
+                <h3 class="text-lg font-semibold text-red-800/90 mb-2">Wife's Visits</h3>
+                <p class="text-3xl font-bold text-red-900" id="wife-total">
                     {{ countries|selectattr('wife_visited')|list|length }}
                 </p>
             </div>
         </div>
         
         <!-- Filter Controls -->
-        <div class="mb-6 flex space-x-4">
+        <div class="flex space-x-3">
             <button onclick="filterTable('all')" 
-                    class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">
+                    class="px-5 py-2.5 text-sm font-medium rounded-lg transition-all
+                           bg-white border border-gray-200 hover:border-gray-300
+                           text-gray-700 hover:text-gray-900 hover:shadow-sm">
                 All Countries
             </button>
             <button onclick="filterTable('husband')" 
-                    class="bg-blue-100 px-4 py-2 rounded hover:bg-blue-200">
+                    class="px-5 py-2.5 text-sm font-medium rounded-lg transition-all
+                           bg-blue-50 border border-blue-100 hover:border-blue-200
+                           text-blue-800 hover:text-blue-900 hover:shadow-sm">
                 Husband Only
             </button>
             <button onclick="filterTable('wife')" 
-                    class="bg-red-100 px-4 py-2 rounded hover:bg-red-200">
+                    class="px-5 py-2.5 text-sm font-medium rounded-lg transition-all
+                           bg-red-50 border border-red-100 hover:border-red-200
+                           text-red-800 hover:text-red-900 hover:shadow-sm">
                 Wife Only
             </button>
             <button onclick="filterTable('both')" 
-                    class="bg-purple-100 px-4 py-2 rounded hover:bg-purple-200">
+                    class="px-5 py-2.5 text-sm font-medium rounded-lg transition-all
+                           bg-purple-50 border border-purple-100 hover:border-purple-200
+                           text-purple-800 hover:text-purple-900 hover:shadow-sm">
                 Both Visited
             </button>
             <button onclick="filterTable('either')" 
-                    class="bg-green-100 px-4 py-2 rounded hover:bg-green-200">
+                    class="px-5 py-2.5 text-sm font-medium rounded-lg transition-all
+                           bg-green-50 border border-green-100 hover:border-green-200
+                           text-green-800 hover:text-green-900 hover:shadow-sm">
                 Either Visited
             </button>
         </div>
     </div>
 
-    <!-- Add this script section -->
-    <script>
-        async function updateCheckbox(event) {
-            event.preventDefault();
-            const form = event.target.form;
-            const formData = new FormData(form);
-            
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    // Update the totals
-                    document.getElementById('husband-total').textContent = data.husband_total;
-                    document.getElementById('wife-total').textContent = data.wife_total;
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        function filterTable(filterType) {
-            const rows = document.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const husbandChecked = row.querySelector('input[name="husband_visited"]').checked;
-                const wifeChecked = row.querySelector('input[name="wife_visited"]').checked;
-                
-                switch(filterType) {
-                    case 'all':
-                        row.style.display = '';
-                        break;
-                    case 'husband':
-                        row.style.display = husbandChecked ? '' : 'none';
-                        break;
-                    case 'wife':
-                        row.style.display = wifeChecked ? '' : 'none';
-                        break;
-                    case 'both':
-                        row.style.display = (husbandChecked && wifeChecked) ? '' : 'none';
-                        break;
-                    case 'either':
-                        row.style.display = (husbandChecked || wifeChecked) ? '' : 'none';
-                        break;
-                }
-            });
-        }
-    </script>
-
     <!-- Countries Table -->
     <div class="overflow-x-auto relative" style="height: calc(100vh - 224px);">
-        <table class="min-w-full bg-white">
+        <table class="w-full">
             <thead>
-                <tr class="bg-gray-100 sticky top-0 z-10">
-                    <th class="px-4 py-2">#</th>
-                    <th class="px-4 py-2">Country</th>
-                    <th class="px-4 py-2">Husband Visited</th>
-                    <th class="px-4 py-2">Wife Visited</th>
+                <tr class="bg-white sticky top-0 z-10 border-b border-gray-100">
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        #
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Country
+                    </th>
+                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Husband Visited
+                    </th>
+                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Wife Visited
+                    </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-gray-100">
                 {% for country in countries %}
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="px-4 py-2 text-center">{{ loop.index }}</td>
-                    <td class="px-4 py-2">{{ country.name }}</td>
-                    <td class="px-4 py-2 text-center">
+                <tr class="hover:bg-gray-50/50 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ loop.index }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {{ country.name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
                         <input type="checkbox" 
                                onchange="updateCheckbox(event)"
                                name="husband_visited"
                                form="update-{{ country.id }}"
+                               class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500
+                                      hover:border-gray-400 transition-colors"
                                {% if country.husband_visited %}checked{% endif %}>
                     </td>
-                    <td class="px-4 py-2 text-center">
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
                         <input type="checkbox" 
                                onchange="updateCheckbox(event)"
                                name="wife_visited"
                                form="update-{{ country.id }}"
+                               class="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500
+                                      hover:border-gray-400 transition-colors"
                                {% if country.wife_visited %}checked{% endif %}>
                     </td>
                 </tr>
@@ -139,4 +111,57 @@
         </table>
     </div>
 </div>
+
+<script>
+    async function updateCheckbox(event) {
+        event.preventDefault();
+        const form = event.target.form;
+        const formData = new FormData(form);
+        
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // Update the totals
+                document.getElementById('husband-total').textContent = data.husband_total;
+                document.getElementById('wife-total').textContent = data.wife_total;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function filterTable(filterType) {
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const husbandChecked = row.querySelector('input[name="husband_visited"]').checked;
+            const wifeChecked = row.querySelector('input[name="wife_visited"]').checked;
+            
+            switch(filterType) {
+                case 'all':
+                    row.style.display = '';
+                    break;
+                case 'husband':
+                    row.style.display = husbandChecked ? '' : 'none';
+                    break;
+                case 'wife':
+                    row.style.display = wifeChecked ? '' : 'none';
+                    break;
+                case 'both':
+                    row.style.display = (husbandChecked && wifeChecked) ? '' : 'none';
+                    break;
+                case 'either':
+                    row.style.display = (husbandChecked || wifeChecked) ? '' : 'none';
+                    break;
+            }
+        });
+    }
+</script>
 {% endblock %}
