@@ -319,9 +319,14 @@ def edit_bucket_list_item(id):
 @main_routes.route('/bucket-list/<int:id>/delete', methods=['POST'])
 def delete_bucket_list_item(id):
     item = BucketList.query.get_or_404(id)
-    db.session.delete(item)
-    db.session.commit()
-    flash('Bucket list item deleted!', 'success')
+    try:
+        db.session.delete(item)
+        db.session.commit()
+        flash('Bucket list item deleted!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('Error deleting bucket list item', 'error')
+        print(f"Error deleting bucket list item: {str(e)}")
     return redirect(url_for('main.bucket_list'))
 
 @main_routes.route('/transportation/<int:id>/delete', methods=['POST'])
