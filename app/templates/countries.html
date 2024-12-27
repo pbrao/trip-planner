@@ -79,10 +79,10 @@
             <tbody class="divide-y divide-gray-100">
                     {% for country in countries %}
                     <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="px-3 py-0.5 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td class="px-3 py-[0.125rem] whitespace-nowrap text-xs font-medium text-gray-900">
                             {{ loop.index }}
                         </td>
-                        <td class="px-3 py-0.5 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td class="px-3 py-[0.125rem] whitespace-nowrap text-xs font-medium text-gray-900">
                             <a href="https://en.wikipedia.org/wiki/{{ country.name }}" 
                                target="_blank" 
                                class="text-blue-600 hover:text-blue-800 transition-colors">{{ country.name }}</a>
@@ -90,7 +90,7 @@
                        <td class="px-6 py-3 whitespace-nowrap text-center">
                             <input type="checkbox" 
                                    onchange="updateCheckbox(event)"
-                                   name="husband_visited"
+                                   name="husband_visited" 
                                    form="update-{{ country.id }}"
                                    class="w-3.5 h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500
                                           hover:border-gray-400 transition-colors"
@@ -113,7 +113,7 @@
                     </form>
                     {% endfor %}
                 </tbody>
-        </table>
+        
     </div>
 </div>
 
