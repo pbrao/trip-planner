@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-4">Welcome to Retiree Travel Planner</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Transportation Card -->
+        <a href="/transportation" class="bg-blue-100 p-6 rounded-lg hover:bg-blue-200 transition-colors">
+            <h2 class="text-xl font-semibold mb-2">Transportation</h2>
+            <p class="text-gray-600">Manage your travel arrangements and transportation details.</p>
+        </a>
+
+        <!-- Lodging Card -->
+        <a href="/lodging" class="bg-green-100 p-6 rounded-lg hover:bg-green-200 transition-colors">
+            <h2 class="text-xl font-semibold mb-2">Lodging</h2>
+            <p class="text-gray-600">Organize your accommodation details and reservations.</p>
+        </a>
+
+        <!-- Bucket List Card -->
+        <a href="/bucket-list" class="bg-yellow-100 p-6 rounded-lg hover:bg-yellow-200 transition-colors">
+            <h2 class="text-xl font-semibold mb-2">Bucket List</h2>
+            <p class="text-gray-600">Track your dream destinations and travel goals.</p>
+        </a>
+
+        <!-- Countries Card -->
+        <a href="/countries" class="bg-purple-100 p-6 rounded-lg hover:bg-purple-200 transition-colors">
+            <h2 class="text-xl font-semibold mb-2">Countries</h2>
+            <p class="text-gray-600">Manage and track visited countries.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
