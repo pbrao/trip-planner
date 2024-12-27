@@ -9,8 +9,25 @@ def index():
 
 @main_routes.route('/transportation')
 def transportation():
-    transport_entries = Transportation.query.order_by(Transportation.departure_date).all()
-    return render_template('transportation.html', transport_entries=transport_entries)
+    sort_column = request.args.get('sort', 'departure_date')
+    sort_direction = request.args.get('direction', 'asc')
+    
+    # Validate sort column
+    valid_columns = ['carrier', 'method', 'departure_date', 'arrival_date', 'total_cost']
+    if sort_column not in valid_columns:
+        sort_column = 'departure_date'
+    
+    # Create the order_by clause
+    column = getattr(Transportation, sort_column)
+    if sort_direction == 'desc':
+        column = column.desc()
+    
+    transport_entries = Transportation.query.order_by(column).all()
+    
+    return render_template('transportation.html', 
+                         transport_entries=transport_entries,
+                         sort_column=sort_column,
+                         sort_direction=sort_direction)
 
 from datetime import date, time
 
