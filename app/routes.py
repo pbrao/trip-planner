@@ -1,16 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import db, Country
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///travel.db'
-app.config['SECRET_KEY'] = 'your-secret-key'
-db.init_app(app)
+main_routes = Blueprint('main', __name__)
 
-@app.route('/')
+@main_routes.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/transportation', methods=['GET', 'POST'])
+@main_routes.route('/transportation', methods=['GET', 'POST'])
 def transportation():
     if request.method == 'POST':
         # Handle form submission
@@ -18,20 +15,20 @@ def transportation():
         return redirect(url_for('transportation'))
     return render_template('transportation.html')
 
-@app.route('/lodging')
+@main_routes.route('/lodging')
 def lodging():
     return render_template('lodging.html')
 
-@app.route('/bucket-list')
+@main_routes.route('/bucket-list')
 def bucket_list():
     return render_template('bucket_list.html')
 
-@app.route('/countries')
+@main_routes.route('/countries')
 def countries():
     countries = Country.query.all()
     return render_template('countries.html', countries=countries)
 
-@app.route('/country/add', methods=['POST'])
+@main_routes.route('/country/add', methods=['POST'])
 def add_country():
     name = request.form.get('name')
     if name:
@@ -41,7 +38,7 @@ def add_country():
         flash('Country added successfully!', 'success')
     return redirect(url_for('countries'))
 
-@app.route('/country/<int:id>/update', methods=['POST'])
+@main_routes.route('/country/<int:id>/update', methods=['POST'])
 def update_country(id):
     country = Country.query.get_or_404(id)
     country.husband_visited = 'husband_visited' in request.form
@@ -50,7 +47,7 @@ def update_country(id):
     flash('Country updated successfully!', 'success')
     return redirect(url_for('countries'))
 
-@app.route('/country/<int:id>/delete', methods=['POST'])
+@main_routes.route('/country/<int:id>/delete', methods=['POST'])
 def delete_country(id):
     country = Country.query.get_or_404(id)
     db.session.delete(country)
