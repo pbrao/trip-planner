@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-6">Transportation Planning</h1>
+    
+    <!-- Transportation Form -->
+    <form method="POST" class="max-w-2xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Flight Details -->
+            <div class="space-y-2">
+                <label class="block font-medium">Flight Details</label>
+                <input type="text" name="flight_number" placeholder="Flight Number" 
+                       class="w-full p-2 border rounded">
+                <input type="datetime-local" name="departure_time" 
+                       class="w-full p-2 border rounded">
+            </div>
+
+            <!-- Ground Transportation -->
+            <div class="space-y-2">
+                <label class="block font-medium">Ground Transportation</label>
+                <select name="transport_type" class="w-full p-2 border rounded">
+                    <option value="">Select type</option>
+                    <option value="rental_car">Rental Car</option>
+                    <option value="train">Train</option>
+                    <option value="bus">Bus</option>
+                    <option value="taxi">Taxi</option>
+                </select>
+                <input type="text" name="pickup_location" placeholder="Pickup Location" 
+                       class="w-full p-2 border rounded">
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="mb-6">
+            <label class="block font-medium mb-2">Additional Notes</label>
+            <textarea name="notes" rows="4" 
+                      class="w-full p-2 border rounded" 
+                      placeholder="Enter any special instructions or notes..."></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" 
+                class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+            Save Transportation Details
+        </button>
+    </form>
+</div>
+{% endblock %}
