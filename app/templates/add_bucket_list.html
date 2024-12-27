@@ -187,3 +187,114 @@ function selectCountry(country) {
     input.focus();  // Keep focus on input after selection
 }
 </script>
+
+<style>
+    #country-suggestions {
+        position: absolute;
+        z-index: 1000;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+        margin-top: 0.25rem;
+    }
+    
+    #country-suggestions div {
+        padding: 0.5rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: background-color 0.2s;
+    }
+    
+    #country-suggestions div:hover {
+        background-color: #f3f4f6;
+    }
+
+    #country-suggestions .font-semibold {
+        font-weight: 600;
+        color: #1d4ed8;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const countryInput = document.getElementById('country-input');
+    const suggestionsDiv = document.getElementById('country-suggestions');
+    let countries = [];
+
+    // Add loading state
+    countryInput.setAttribute('disabled', true);
+    countryInput.placeholder = 'Loading countries...';
+
+    // Fetch countries once when page loads
+    fetch('/api/countries')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            countries = data;
+            countryInput.removeAttribute('disabled');
+            countryInput.placeholder = 'Start typing country name...';
+        })
+        .catch(error => {
+            console.error('Error loading countries:', error);
+            countryInput.placeholder = 'Error loading countries';
+        });
+
+    countryInput.addEventListener('input', function() {
+        const inputValue = this.value.trim().toLowerCase();
+        
+        if (inputValue.length >= 2) {
+            const filteredCountries = countries.filter(country => 
+                country.toLowerCase().includes(inputValue)
+            );
+            
+            if (filteredCountries.length > 0) {
+                suggestionsDiv.innerHTML = filteredCountries
+                    .slice(0, 10) // Limit to 10 suggestions
+                    .map(country => {
+                        // Highlight matching text
+                        const startIndex = country.toLowerCase().indexOf(inputValue);
+                        const endIndex = startIndex + inputValue.length;
+                        const beforeMatch = country.slice(0, startIndex);
+                        const match = country.slice(startIndex, endIndex);
+                        const afterMatch = country.slice(endIndex);
+                        
+                        return `
+                            <div class="p-2 hover:bg-gray-100 cursor-pointer" 
+                                 onclick="selectCountry('${country.replace(/'/g, "\\'")}')">
+                                ${beforeMatch}<span class="font-semibold">${match}</span>${afterMatch}
+                            </div>
+                        `;
+                    }).join('');
+                suggestionsDiv.classList.remove('hidden');
+            } else {
+                suggestionsDiv.innerHTML = '<div class="p-2 text-gray-500">No matches found</div>';
+                suggestionsDiv.classList.remove('hidden');
+            }
+        } else {
+            suggestionsDiv.classList.add('hidden');
+        }
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!suggestionsDiv.contains(e.target) && e.target !== countryInput) {
+            suggestionsDiv.classList.add('hidden');
+        }
+    });
+});
+
+function selectCountry(country) {
+    const input = document.getElementById('country-input');
+    input.value = country.replace(/\\'/g, "'");
+    document.getElementById('country-suggestions').classList.add('hidden');
+    input.focus();  // Keep focus on input after selection
+}
+</script>
