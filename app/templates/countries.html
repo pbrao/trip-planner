@@ -25,31 +25,31 @@
                     class="px-4 py-2 text-xs font-medium rounded-lg transition-all
                            bg-white border border-gray-200 hover:border-gray-300
                            text-gray-700 hover:text-gray-900 hover:shadow-sm">
-                All Countries
+                All Countries ({{ countries|length }})
             </button>
             <button onclick="filterTable('husband')" 
                     class="px-4 py-2 text-xs font-medium rounded-lg transition-all
                            bg-blue-50 border border-blue-100 hover:border-blue-200
                            text-blue-800 hover:text-blue-900 hover:shadow-sm">
-                Husband Only
+                Husband Only ({{ countries|selectattr('husband_visited')|list|length }})
             </button>
             <button onclick="filterTable('wife')" 
                     class="px-4 py-2 text-xs font-medium rounded-lg transition-all
                            bg-red-50 border border-red-100 hover:border-red-200
                            text-red-800 hover:text-red-900 hover:shadow-sm">
-                Wife Only
+                Wife Only ({{ countries|selectattr('wife_visited')|list|length }})
             </button>
             <button onclick="filterTable('both')" 
                     class="px-4 py-2 text-xs font-medium rounded-lg transition-all
                            bg-purple-50 border border-purple-100 hover:border-purple-200
                            text-purple-800 hover:text-purple-900 hover:shadow-sm">
-                Both Visited
+                Both Visited ({{ countries|selectattr('husband_visited')|selectattr('wife_visited')|list|length }})
             </button>
             <button onclick="filterTable('either')" 
                     class="px-4 py-2 text-xs font-medium rounded-lg transition-all
                            bg-green-50 border border-green-100 hover:border-green-200
                            text-green-800 hover:text-green-900 hover:shadow-sm">
-                Either Visited
+                Either Visited ({{ (countries|selectattr('husband_visited')|list|length) + (countries|selectattr('wife_visited')|list|length) - (countries|selectattr('husband_visited')|selectattr('wife_visited')|list|length) }})
             </button>
         </div>
     </div>
