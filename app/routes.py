@@ -12,7 +12,7 @@ def transportation():
     if request.method == 'POST':
         # Handle form submission
         flash('Transportation details saved!', 'success')
-        return redirect(url_for('transportation'))
+        return redirect(url_for('main.transportation'))
     return render_template('transportation.html')
 
 @main_routes.route('/lodging')
@@ -36,7 +36,7 @@ def add_country():
         db.session.add(country)
         db.session.commit()
         flash('Country added successfully!', 'success')
-    return redirect(url_for('countries'))
+    return redirect(url_for('main.countries'))
 
 @main_routes.route('/country/<int:id>/update', methods=['POST'])
 def update_country(id):
@@ -45,7 +45,7 @@ def update_country(id):
     country.wife_visited = 'wife_visited' in request.form
     db.session.commit()
     flash('Country updated successfully!', 'success')
-    return redirect(url_for('countries'))
+    return redirect(url_for('main.countries'))
 
 @main_routes.route('/country/<int:id>/delete', methods=['POST'])
 def delete_country(id):
@@ -53,4 +53,4 @@ def delete_country(id):
     db.session.delete(country)
     db.session.commit()
     flash('Country deleted successfully!', 'success')
-    return redirect(url_for('countries'))
+    return redirect(url_for('main.countries'))
