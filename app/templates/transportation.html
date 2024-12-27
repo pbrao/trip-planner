@@ -24,7 +24,8 @@
             </thead>
             <tbody>
                 {% for entry in transport_entries %}
-                <tr class="border-b hover:bg-gray-50">
+                <tr class="border-b hover:bg-gray-50 cursor-pointer" 
+                    onclick="window.location.href='{{ url_for('main.edit_transportation', id=entry.id) }}'">
                     <td class="px-4 py-2 align-top">{{ entry.carrier }}</td>
                     <td class="px-4 py-2 align-top">{{ entry.method }}</td>
                     <td class="px-4 py-2 align-top">

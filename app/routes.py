@@ -14,6 +14,43 @@ def transportation():
 
 from datetime import date, time
 
+@main_routes.route('/transportation/<int:id>/edit', methods=['GET', 'POST'])
+def edit_transportation(id):
+    transport = Transportation.query.get_or_404(id)
+    if request.method == 'POST':
+        # Convert form data to appropriate types
+        def parse_date(date_str):
+            return date.fromisoformat(date_str) if date_str else None
+            
+        def parse_time(time_str):
+            return time.fromisoformat(time_str) if time_str else None
+            
+        def parse_float(float_str):
+            return float(float_str) if float_str else None
+
+        # Update transportation entry with converted data
+        transport.carrier = request.form.get('carrier')
+        transport.method = request.form.get('method')
+        transport.number = request.form.get('number')
+        transport.departure_date = parse_date(request.form.get('departure_date'))
+        transport.departure_location = request.form.get('departure_location')
+        transport.departure_time = parse_time(request.form.get('departure_time'))
+        transport.arrival_location = request.form.get('arrival_location')
+        transport.arrival_date = parse_date(request.form.get('arrival_date'))
+        transport.arrival_time = parse_time(request.form.get('arrival_time'))
+        transport.reservation_number = request.form.get('reservation_number')
+        transport.booked_date = parse_date(request.form.get('booked_date'))
+        transport.booking_info = request.form.get('booking_info')
+        transport.luggage_restrictions = request.form.get('luggage_restrictions')
+        transport.purchase_price = parse_float(request.form.get('purchase_price'))
+        transport.total_cost = parse_float(request.form.get('total_cost'))
+        
+        db.session.commit()
+        flash('Transportation entry updated!', 'success')
+        return redirect(url_for('main.transportation'))
+    
+    return render_template('edit_transportation.html', transport=transport)
+
 @main_routes.route('/transportation/add', methods=['GET', 'POST'])
 def add_transportation():
     if request.method == 'POST':
