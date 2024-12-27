@@ -38,7 +38,7 @@ def transportation():
                          sort_column=sort_column,
                          sort_direction=sort_direction)
 
-from datetime import date, time
+from datetime import date, time, time as time_type
 
 @main_routes.route('/transportation/<int:id>/edit', methods=['GET', 'POST'])
 def edit_transportation(id):
@@ -49,7 +49,9 @@ def edit_transportation(id):
             return date.fromisoformat(date_str) if date_str else None
             
         def parse_time(time_str):
-            return time.fromisoformat(time_str) if time_str else None
+            if time_str:
+                return time_type.fromisoformat(time_str)
+            return None
             
         def parse_float(float_str):
             return float(float_str) if float_str else None
@@ -149,8 +151,8 @@ def add_lodging():
             address=request.form.get('address'),
             confirmation_number=request.form.get('confirmation_number'),
             cancellation_rules=request.form.get('cancellation_rules'),
-            check_in=request.form.get('check_in'),
-            check_out=request.form.get('check_out'),
+            check_in=parse_time(request.form.get('check_in')),
+            check_out=parse_time(request.form.get('check_out')),
             property_link=request.form.get('property_link'),
             notes=request.form.get('notes')
         )
