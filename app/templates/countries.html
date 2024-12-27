@@ -2,6 +2,22 @@
 
 {% block content %}
 <div class="bg-white p-6 rounded-lg shadow">
+    <!-- Tally Section -->
+    <div class="grid grid-cols-2 gap-6 mb-8 p-6 bg-gray-50 rounded-lg">
+        <div class="text-center">
+            <h3 class="text-2xl font-bold text-blue-600">Husband's Visits</h3>
+            <p class="text-4xl font-bold text-blue-600">
+                {{ countries|selectattr('husband_visited')|list|length }}
+            </p>
+        </div>
+        <div class="text-center">
+            <h3 class="text-2xl font-bold text-red-600">Wife's Visits</h3>
+            <p class="text-4xl font-bold text-red-600">
+                {{ countries|selectattr('wife_visited')|list|length }}
+            </p>
+        </div>
+    </div>
+
     <h2 class="text-2xl font-bold mb-4">Countries Visited</h2>
     
 
