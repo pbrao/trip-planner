@@ -10,10 +10,32 @@ def index():
 @main_routes.route('/transportation', methods=['GET', 'POST'])
 def transportation():
     if request.method == 'POST':
-        # Handle form submission
-        flash('Transportation details saved!', 'success')
+        # Create new transportation entry
+        new_transport = Transportation(
+            carrier=request.form.get('carrier'),
+            method=request.form.get('method'),
+            number=request.form.get('number'),
+            departure_date=request.form.get('departure_date'),
+            departure_location=request.form.get('departure_location'),
+            departure_time=request.form.get('departure_time'),
+            arrival_location=request.form.get('arrival_location'),
+            arrival_date=request.form.get('arrival_date'),
+            arrival_time=request.form.get('arrival_time'),
+            reservation_number=request.form.get('reservation_number'),
+            booked_date=request.form.get('booked_date'),
+            booking_info=request.form.get('booking_info'),
+            luggage_restrictions=request.form.get('luggage_restrictions'),
+            purchase_price=request.form.get('purchase_price'),
+            total_cost=request.form.get('total_cost')
+        )
+        db.session.add(new_transport)
+        db.session.commit()
+        flash('Transportation entry added!', 'success')
         return redirect(url_for('main.transportation'))
-    return render_template('transportation.html')
+    
+    # Get all transportation entries
+    transport_entries = Transportation.query.order_by(Transportation.departure_date).all()
+    return render_template('transportation.html', transport_entries=transport_entries)
 
 @main_routes.route('/lodging')
 def lodging():
